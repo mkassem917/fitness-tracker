@@ -44,3 +44,11 @@ const exerciseSchema = new Schema(
     },
   }
 );
+
+exerciseSchema.virtual("totalDuration").get(() => {
+    return this.exercises.reduce((total, exercise) => {
+        return total + exercise.duration;
+    }, 0);
+});
+const Exercise = mongoose.model("Workout", exerciseSchema);
+module.exports = Exercise;
