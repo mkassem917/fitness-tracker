@@ -2,9 +2,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const logger = require("morgan");
+const compression = require("compression");
 
-//Seed File for database
-const seeders = require("./seeders/seed");
+
 
 //Required Port Settings
 const PORT = process.env.PORT || 3000;
@@ -16,6 +16,7 @@ const app = express();
 app.use(logger("morgan dev"));
 
 //Data Parsing
+app.use(compression());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -32,7 +33,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
 
 //Required Routes
 app.use(require("./routes/api"));
-app.use(require("./routes/html"));
+//app.use(require("./routes/html"));
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
